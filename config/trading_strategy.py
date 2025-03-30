@@ -270,3 +270,19 @@ class TradingStrategy:
                 elif df['rsi'].iloc[-1] > 65:
                     df.loc[df.index[-1], 'final_signal'] = -1
             elif regime == "high_vol
+            elif regime == "high_volatility_trending":
+            if df['macd'].iloc[-1] > df['macdsignal'].iloc[-1]:
+                df.loc[df.index[-1], 'final_signal'] = 1
+            elif df['macd'].iloc[-1] < df['macdsignal'].iloc[-1]:
+                df.loc[df.index[-1], 'final_signal'] = -1
+        else: # Neutral regime with signal strength aggregation
+            if df['signal_strength'].iloc[-1] > buy_threshold and above_long_term_sma.iloc[-1]:
+                df.loc[df.index[-1], 'final_signal'] = 1
+            elif df['signal_strength'].iloc[-1] < sell_threshold and below_long_term_sma.iloc[-1]:
+                df.loc[df.index[-1], 'final_signal'] = -1
+
+        return df
+
+    def calculate_adx(self, df: pd.DataFrame, timeperiod: int = 14) -> pd.Series:
+        """Calculate Average Directional Movement Index (ADX)."""
+        return talib.ADX(df['high'], df['low'], df['close'], timeperiod=timeperiod)
