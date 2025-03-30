@@ -1,0 +1,38 @@
+# config/config.json
+{
+    "risk_per_trade": 0.01,
+    "max_positions": 2,
+    "min_win_rate": 0.4,
+    "recalibration_window": 20,
+    "max_drawdown": 0.1,
+    "leverage": 1,
+    "position_sizing": {
+        "method": "fixed_fractional",
+        "fraction": 0.01
+    },
+    "indicators": {
+        "rsi": {
+            "oversold": 30,
+            "overbought": 70
+        }
+    },
+    "patterns": {
+        "candlestick": true,
+        "chart": true
+    },
+    "risk_management": {
+        "stop_loss": {
+            "method": "atr",
+            "atr_multiplier": 2
+        },
+        "take_profit": {
+            "method": "risk_reward",
+            "risk_reward_ratio": 2
+        },
+        "trailing_stop": {
+            "enabled": false,
+            "activation_percentage": 0.02,
+            "trail_percentage": 0.01
+        }
+    }
+}
